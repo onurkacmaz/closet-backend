@@ -58,9 +58,11 @@ class ItemService
 
         foreach ($photos as $photo) {
             $imageName = sprintf("%s.%s", Str::uuid(), "png");
-            $path = public_path('storage/item_photos/' . $imageName);
 
-            Storage::disk('public')->put($path, Image::make($photo['base64'])->stream());
+            Storage::disk('public')->put(
+                'item_photos',
+                Image::make($photo['base64'])->stream()
+            );
 
             $urls[] = ['item_id' => $item->id, 'url' => 'storage/item_photos/' . $imageName];
         }
