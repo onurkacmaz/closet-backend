@@ -55,13 +55,16 @@ class ItemService
     private function uploadPhotos(Item|Model $item, array $photos): array
     {
         $urls = [];
+
         foreach ($photos as $photo) {
             $imageName = sprintf("%s.%s", Str::uuid(), "png");
-            $path = public_path('storage/photos/'.$imageName);
-            $image = Image::make($photo['base64'])->stream();
-            $destinationPath = Storage::put($path, $image);
-            $urls[] = ['item_id' => $item->id, 'url' => $destinationPath];
+            $path = public_path('storage/item_photos/' . $imageName);
+
+            Storage::put($path, Image::make($photo['base64'])->stream());
+
+            $urls[] = ['item_id' => $item->id, 'url' => 'storage/item_photos/' . $imageName];
         }
+
         return $urls;
     }
 
