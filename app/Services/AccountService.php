@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\ApiException;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -39,18 +40,22 @@ class AccountService
      */
     public function updateProfilePicture(int $id, string $encodedPhotoString): array
     {
-        $imageName = sprintf("%s.%s", $id, "png");
-        $path = public_path('storage/profile-photos/'.$imageName);
-        Image::make($encodedPhotoString)->save($path);
-        $url = '/storage/profile-photos/'.$imageName;
+        $path = sprintf("profile-photos/%s.%s", $id, "png");
+
+        Storage::put(
+            $path,
+            Image::make($encodedPhotoString)->stream()
+        );
+
+        $path = str_replace(Config::get('app.url'), '', Storage::url($path));
 
         try {
-            $this->updateAccount($id, ['photo' => $url]);
+            $this->updateAccount($id, ['photo' => $path]);
             return [
-                'photo' => $url,
+                'photo' => $path,
             ];
         } catch (ApiException) {
-            Storage::delete($url);
+            Storage::delete($path);
             throw new ApiException('PROFILE_PHOTO_UPLOAD_FAILED', 422);
         }
     }
