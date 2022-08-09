@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class ItemService
@@ -55,10 +56,11 @@ class ItemService
     {
         $urls = [];
         foreach ($photos as $photo) {
-            $imageName = sprintf("%s.%s", random_int(0, 99999999), "png");
+            $imageName = sprintf("%s.%s", Str::uuid(), "png");
             $path = public_path('storage/photos/'.$imageName);
-            Image::make($photo['base64'])->save($path);
-            $urls[] = ['item_id' => $item->id, 'url' => '/storage/photos/'.$imageName];
+            $image = Image::make($photo['base64'])->stream();
+            $destinationPath = Storage::put($path, $image);
+            $urls[] = ['item_id' => $item->id, 'url' => $destinationPath];
         }
         return $urls;
     }
