@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -57,14 +58,16 @@ class ItemService
         $urls = [];
 
         foreach ($photos as $photo) {
-            $imageName = sprintf("%s.%s", Str::uuid(), "png");
+            $path = sprintf("item-photos/%s.%s", Str::uuid(), "png");
 
-            Storage::disk('public')->put(
-                'item_photos',
+            Storage::put(
+                $path,
                 Image::make($photo['base64'])->stream()
             );
 
-            $urls[] = ['item_id' => $item->id, 'url' => 'storage/item_photos/' . $imageName];
+            $path = str_replace(Config::get('app.url'), '', Storage::url($path));
+
+            $urls[] = ['item_id' => $item->id, 'url' => $path];
         }
 
         return $urls;
