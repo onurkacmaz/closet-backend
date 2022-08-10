@@ -14,7 +14,7 @@ class CombineItem extends Model
 
     protected $table = "combine_items";
     protected $guarded = [];
-    protected $with = ['item.photos'];
+    protected $with = ['item.photos', 'combineItemReaction'];
 
     public function combine(): HasOne
     {
@@ -24,5 +24,10 @@ class CombineItem extends Model
     public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
+
+    public function combineItemReaction(): HasOne
+    {
+        return $this->hasOne(CombineItemReaction::class, 'combine_item_id', 'id');
     }
 }
