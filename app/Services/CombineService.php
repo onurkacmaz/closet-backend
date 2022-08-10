@@ -10,7 +10,7 @@ class CombineService
 {
     public function getCombines(): Collection
     {
-        return Combine::all();
+        return Combine::query()->withSum('combineItems.combineItemReaction', 'like')->get();
     }
 
     public function getCombine(int $combineId): Model|Combine|null
