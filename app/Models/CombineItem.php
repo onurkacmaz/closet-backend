@@ -14,7 +14,7 @@ class CombineItem extends Model
 
     protected $table = "combine_items";
     protected $guarded = [];
-    protected $with = ['item.photos', 'combineItemReaction'];
+    protected $with = ['item.photos'];
 
     public function combine(): HasOne
     {
