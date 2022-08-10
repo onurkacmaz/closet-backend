@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCombineItemReactionsTable extends Migration
+class CreateCombineReactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCombineItemReactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('combine_item_reactions', function (Blueprint $table) {
+        Schema::create('combine_reactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('combine_item_id');
+            $table->unsignedBigInteger('combine_id');
             $table->bigInteger('like');
             $table->bigInteger('dislike');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateCombineItemReactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('combine_item_reactions');
+        Schema::dropIfExists('combine_reactions');
     }
 }

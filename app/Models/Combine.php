@@ -13,7 +13,7 @@ class Combine extends Model
 
     protected $table = 'combines';
     protected $guarded = [];
-    protected $with = ['combineItems', 'user'];
+    protected $with = ['combineItems', 'user', 'combineReaction'];
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -21,6 +21,10 @@ class Combine extends Model
 
     public function combineItems(): HasMany
     {
-        return $this->hasMany(CombineItem::class, 'combine_id', 'id')->withSum('combineItemReaction', 'like');
+        return $this->hasMany(CombineItem::class, 'combine_id', 'id');
+    }
+
+    public function combineReaction(): HasOne {
+        return $this->hasOne(CombineReaction::class, 'combine_id', 'id');
     }
 }

@@ -25,9 +25,4 @@ class CombineItem extends Model
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
     }
-
-    public function combineItemReaction(): HasOne
-    {
-        return $this->hasOne(CombineItemReaction::class, 'combine_item_id', 'id');
-    }
 }
