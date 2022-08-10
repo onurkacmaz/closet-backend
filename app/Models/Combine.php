@@ -14,6 +14,7 @@ class Combine extends Model
     protected $table = 'combines';
     protected $guarded = [];
     protected $with = ['combineItems', 'user', 'combineReactions'];
+    protected $withCount = ['combineReactions'];
 
     public function user(): HasOne {
         return $this->hasOne(User::class, 'id', 'user_id');

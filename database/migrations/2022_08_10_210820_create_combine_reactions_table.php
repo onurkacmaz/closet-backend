@@ -17,8 +17,6 @@ class CreateCombineReactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('combine_id');
-            $table->bigInteger('like');
-            $table->bigInteger('dislike');
             $table->timestamps();
         });
     }
