@@ -21,6 +21,6 @@ class Combine extends Model
 
     public function combineItems(): HasMany
     {
-        return $this->hasMany(CombineItem::class, 'combine_id', 'id');
+        return $this->hasMany(CombineItem::class, 'combine_id', 'id')->withSum('combineItemReaction', 'like');
     }
 }
