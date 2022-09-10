@@ -15,7 +15,7 @@ class Twilio implements SMSClientInterface
     public function send(string $phoneNumber, string $message): array
     {
         $account_sid = 'ACaf9e9f097a54480b4b37c09304640f03';
-        $auth_token = 'f8de2d76267a156d28f45a5d90c74c6d';
+        $auth_token = '5b1e1d9feb751172808d850605e8d136';
 
         $twilio_number = "+15735494379";
 
