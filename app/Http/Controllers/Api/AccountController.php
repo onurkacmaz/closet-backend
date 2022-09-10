@@ -32,7 +32,6 @@ class AccountController
         return response()->noContent();
     }
 
-
     /**
      * @throws ApiException
      */

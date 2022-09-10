@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\SendResetPasswordEmailRequest;
+use App\Http\Requests\SendSMSVerificationCodeRequest;
+use App\Http\Requests\VerifySmsCodeRequest;
 use App\Http\Resources\LoginResource;
 use App\Http\Resources\RegisterResource;
 use App\Services\AuthService;
@@ -39,6 +41,28 @@ class AuthController extends Controller
     public function sendResetPasswordEmail(SendResetPasswordEmailRequest $request, AuthService $authService): JsonResponse {
         $authService->sendResetPasswordEmail($request->get('email'));
         return response()->json(['message' => 'Email sent']);
+    }
+
+    /**
+     * @param SendSMSVerificationCodeRequest $request
+     * @param AuthService $authService
+     * @return JsonResponse
+     * @throws ApiException
+     */
+    public function sendSMSVerificationCode(SendSMSVerificationCodeRequest $request, AuthService $authService): JsonResponse {
+        $authService->sendSMSVerificationCode($request->get('email'), $request->get('password'));
+        return response()->json(['message' => 'Sms sent']);
+    }
+
+    /**
+     * @param VerifySmsCodeRequest $request
+     * @param AuthService $authService
+     * @return JsonResponse
+     * @throws ApiException
+     */
+    public function verifySmsCode(VerifySmsCodeRequest $request, AuthService $authService): JsonResponse {
+        $authService->verifySmsCode($request->get('email'), $request->get('smsCode'));
+        return response()->json(['message' => 'Sms verified']);
     }
 
     /**

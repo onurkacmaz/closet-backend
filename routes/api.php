@@ -22,6 +22,8 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/send-reset-password-email', [AuthController::class, 'sendResetPasswordEmail']);
 Route::post('/auth/retrieve-token', [AuthController::class, 'retrieveToken']);
+Route::post('/auth/send-sms-verification-code', [AuthController::class, 'sendSMSVerificationCode']);
+Route::post('/auth/verify-sms-code', [AuthController::class, 'verifySmsCode']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'combines'], function () {
