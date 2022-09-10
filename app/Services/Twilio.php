@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Config;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
@@ -14,10 +15,10 @@ class Twilio implements SMSClientInterface
      */
     public function send(string $phoneNumber, string $message): array
     {
-        $account_sid = 'ACaf9e9f097a54480b4b37c09304640f03';
-        $auth_token = '5b1e1d9feb751172808d850605e8d136';
+        $account_sid = Config::get('twilo.account_sid');
+        $auth_token = Config::get('twilo.auth_token');
 
-        $twilio_number = "+15735494379";
+        $twilio_number = Config::get('twilo.twilio_number');
 
         $client = new Client($account_sid, $auth_token);
 
