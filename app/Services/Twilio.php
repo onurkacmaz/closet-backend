@@ -20,7 +20,9 @@ class Twilio implements SMSClientInterface
 
         $twilio_number = Config::get('twilo.twilio_number');
 
+        dd($account_sid, $auth_token);
         $client = new Client($account_sid, $auth_token);
+
 
         $response = $client->messages->create(
             $phoneNumber,
